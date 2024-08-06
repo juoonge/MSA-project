@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
-group = 'com.sparta.msa_exam'
+group = 'com.spring-cloud.eureka.client'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -28,6 +28,9 @@ ext {
 }
 
 dependencies {
+	implementation 'io.jsonwebtoken:jjwt:0.12.6'
+	runtimeOnly 'org.hsqldb:hsqldb'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -37,6 +40,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'io.projectreactor:reactor-test'
+
 }
 
 dependencyManagement {
