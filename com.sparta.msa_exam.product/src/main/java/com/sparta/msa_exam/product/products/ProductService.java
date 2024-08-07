@@ -2,7 +2,6 @@ package com.sparta.msa_exam.product.products;
 
 import com.sparta.msa_exam.product.core.Product;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
