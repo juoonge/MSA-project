@@ -18,13 +18,11 @@ public class Product {
 
     private String name;
     private Integer price;
-    private String createdBy;
 
-    public static Product createProduct(ProductRequestDto requestDto,String userId){
+    public static Product createProduct(ProductRequestDto requestDto){
         return Product.builder()
                 .name(requestDto.getName())
                 .price(requestDto.getPrice())
-                .createdBy(userId)
                 .build();
     }
 

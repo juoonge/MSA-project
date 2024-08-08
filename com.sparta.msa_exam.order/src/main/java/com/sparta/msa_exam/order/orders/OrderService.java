@@ -2,7 +2,6 @@ package com.sparta.msa_exam.order.orders;
 
 import com.sparta.msa_exam.order.core.Order;
 import com.sparta.msa_exam.order.core.client.ProductClient;
-import com.sparta.msa_exam.order.core.client.ProductResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +22,8 @@ public class OrderService {
 
         Order order = Order.createOrder(requestDto.getOrderItemIds(), userId);
         Order savedOrder = orderRepository.save(order);
+
+
         return toResponseDto(savedOrder);
     }
 
@@ -40,7 +41,7 @@ public class OrderService {
      *  존재할경우 주문에 상품을 추가하고, 존재하지 않는다면 주문에 저장하지 않음.
      */
     @Transactional
-    public OrderResponseDto addProduct(Long orderId, OrderRequestDto requestDto,String UserId) {
+    public OrderResponseDto addProduct(Long orderId,OrderAddDto orderAddDto,String userId) {
 
 
         // 1. 주문 존재 여부 확인
@@ -48,15 +49,12 @@ public class OrderService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
         // 2. 상품 존재 여부 확인
-        for(Long productId:requestDto.getOrderItemIds()){
-            ProductResponseDto product=productClient.getProduct(productId);
-            if(product==null){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product with ID " + productId + " does not exist or is out of stock.");
-            }
+        if(productClient.getProduct(orderAddDto.getId(),userId)==null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product with ID " + orderAddDto.getId() + " does not exist or is out of stock.");
         }
 
         // 3. 주문에 상품 추가
-        order.addProduct(requestDto.getOrderItemIds());
+        order.addProduct(orderAddDto.getId());
         Order addOrder=orderRepository.save(order);
 
         return toResponseDto(addOrder);
@@ -66,7 +64,7 @@ public class OrderService {
     private OrderResponseDto toResponseDto(Order order) {
         return new OrderResponseDto(
                 order.getId(),
-                order.getCreatedBy(),
+                order.getName(),
                 order.getOrderItemIds()
         );
     }

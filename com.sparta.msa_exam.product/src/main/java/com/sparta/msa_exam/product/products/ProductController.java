@@ -1,5 +1,6 @@
 package com.sparta.msa_exam.product.products;
 
+import com.sparta.msa_exam.product.core.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,13 @@ public class ProductController {
 
     // 상품 목록 조회
     @GetMapping
-    public List<ProductResponseDto> getAllProducts(){
-        return productService.getAllProducts();
+    public List<ProductResponseDto> getAllProducts(@RequestHeader(value="X-USER-Id",required=true) String userId){
+        return productService.getAllProducts(userId);
+    }
+
+    @GetMapping("/{id}")
+    public ProductResponseDto getProduct(@PathVariable Long id,
+                                         @RequestHeader(value="X-USER-Id",required=true)String userId){
+        return productService.getProductById(id);
     }
 }
