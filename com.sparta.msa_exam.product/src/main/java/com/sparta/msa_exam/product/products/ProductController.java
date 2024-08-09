@@ -27,9 +27,9 @@ public class ProductController {
         return productService.getAllProducts(userId);
     }
 
-    @GetMapping("/{id}")
-    public ProductResponseDto getProduct(@PathVariable Long id,
-                                         @RequestHeader(value="X-USER-Id",required=true)String userId){
+    // 상품 단건 조회
+    @PostMapping("/{id}")
+    public ProductResponseDto getProduct(@PathVariable Long id){
         return productService.getProductById(id);
     }
 }

@@ -2,10 +2,7 @@ package com.sparta.msa_exam.order.orders;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/orders")
@@ -30,11 +27,11 @@ public class OrderController {
     }
 
 
-    @PutMapping("/{orderId}")
+    @PostMapping("/{orderId}")
     public OrderResponseDto addProduct(@PathVariable Long orderId,
-                                        @RequestBody OrderAddDto orderAddDto,
+                                       @RequestBody ProductAddDto productId,
                                         @RequestHeader(value = "X-User-Id", required = true) String userId) {
-        return orderService.addProduct(orderId,orderAddDto,userId);
+        return orderService.addProduct(orderId,productId,userId);
     }
 
 }

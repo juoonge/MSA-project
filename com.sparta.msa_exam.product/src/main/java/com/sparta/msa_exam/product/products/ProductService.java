@@ -25,8 +25,6 @@ public class ProductService {
     }
 
     // 상품 목록 cache
-    // 이 메서드의 결과는 캐싱이 가능하다
-    // cacheNames: 이 메서드로 인해 만들어진 캐시를 지칭하는 이름
     @Cacheable(cacheNames="productAllCache", key="methodName")
     public List<ProductResponseDto> getAllProducts(String userId){
         return productRepository.findAll().stream()

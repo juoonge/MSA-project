@@ -41,7 +41,7 @@ public class OrderService {
      *  존재할경우 주문에 상품을 추가하고, 존재하지 않는다면 주문에 저장하지 않음.
      */
     @Transactional
-    public OrderResponseDto addProduct(Long orderId,OrderAddDto orderAddDto,String userId) {
+    public OrderResponseDto addProduct(Long orderId, ProductAddDto productId, String userId) {
 
 
         // 1. 주문 존재 여부 확인
@@ -49,12 +49,12 @@ public class OrderService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
 
         // 2. 상품 존재 여부 확인
-        if(productClient.getProduct(orderAddDto.getId(),userId)==null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product with ID " + orderAddDto.getId() + " does not exist or is out of stock.");
+        if(productClient.getProduct(productId.getId(), userId)==null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product with ID " + productId + " does not exist or is out of stock.");
         }
 
         // 3. 주문에 상품 추가
-        order.addProduct(orderAddDto.getId());
+        order.getOrderItemIds().add(productId.getId());
         Order addOrder=orderRepository.save(order);
 
         return toResponseDto(addOrder);

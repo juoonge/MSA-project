@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "product-service",url = "localhost:19091/")
+@FeignClient(name = "product-service",url = "${product-service.url}")
 public interface ProductClient {
-    @GetMapping("products/{id}/")
+    @PostMapping("products/{id}/")
     ProductResponseDto getProduct(@PathVariable("id") Long id,
-                                  @RequestHeader(value="Authorization",required=true) String userId);
+                                  @RequestHeader(value="X-USER-Id",required=true) String userId);
 }
