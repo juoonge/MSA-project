@@ -34,8 +34,13 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	runtimeOnly 'org.hsqldb:hsqldb'
 
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+	implementation 'io.github.openfeign:feign-micrometer'
+	implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+
 	runtimeOnly 'com.h2database:h2'
-	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
